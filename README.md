@@ -4,13 +4,6 @@
 
 * [17 , 17.2 , latest](https://github.com/seffeng/docker-postgresql/tree/17.x)
 
-## 环境
-
-```
-alpine: ^3.21
-postgresql: ^17.0
-```
-
 ## 常用命令：
 ```sh
 # 拉取镜像
