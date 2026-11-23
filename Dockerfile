@@ -1,4 +1,4 @@
-FROM seffeng/alpine:3.21
+FROM seffeng/alpine:3.24
 
 LABEL author="zxf <seffeng@live.com>"
 
@@ -7,7 +7,7 @@ ENV BASE_DIR="/opt/websrv"
 ENV CONFIG_DIR="${BASE_DIR}/config/postgresql"\
  INSTALL_DIR="${BASE_DIR}/program/postgresql"\
  PGDATA="${BASE_DIR}/data/postgresql"\
- EXTEND="postgresql"
+ EXTEND="postgresql17"
 
 WORKDIR /tmp
 COPY    docker-entrypoint.sh /usr/local/bin/
