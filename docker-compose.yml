@@ -1,0 +1,26 @@
+services:
+  pgsql-alias1:
+    container_name: "pgsql-alias1"
+    hostname: "pgsql-alias1"
+    image: "seffeng/postgresql"
+    command: [
+        "tail",
+        "-f",
+        "/opt/websrv/logs/pgsql_server.log"
+    ]
+    ports:
+      - "5432:5432"
+    networks:
+      network-01:
+        aliases:
+          - pgsql-net1
+    restart: always
+    volumes:
+      - "/opt/websrv/data/postgresql:/opt/websrv/data/postgresql"
+      - "/opt/websrv/tmp/postgresql:/opt/websrv/tmp"
+      - "/opt/websrv/logs/postgresql:/opt/websrv/logs"
+
+networks:
+  network-01:
+    driver: bridge
+    name: network-01
