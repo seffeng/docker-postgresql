@@ -13,16 +13,20 @@ init_database_dir() {
     fi
 
     if [ -f ${BASE_DIR}/data/postgresql/pg_hba.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/pg_hba.conf ]; then
-        ln -s ${BASE_DIR}/data/postgresql/pg_hba.conf ${BASE_DIR}/config/postgresql/pg_hba.conf
+        mv ${BASE_DIR}/data/postgresql/pg_hba.conf ${BASE_DIR}/config/postgresql/pg_hba.conf
+        ln -s ${BASE_DIR}/config/postgresql/pg_hba.conf ${BASE_DIR}/data/postgresql/pg_hba.conf
     fi
     if [ -f ${BASE_DIR}/data/postgresql/pg_ident.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/pg_ident.conf ]; then
-        ln -s ${BASE_DIR}/data/postgresql/pg_ident.conf ${BASE_DIR}/config/postgresql/pg_ident.conf
+        mv ${BASE_DIR}/data/postgresql/pg_ident.conf ${BASE_DIR}/config/postgresql/pg_ident.conf
+        ln -s ${BASE_DIR}/config/postgresql/pg_ident.conf ${BASE_DIR}/data/postgresql/pg_ident.conf
     fi
     if [ -f ${BASE_DIR}/data/postgresql/postgresql.auto.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/postgresql.auto.conf ]; then
-        ln -s ${BASE_DIR}/data/postgresql/postgresql.auto.conf ${BASE_DIR}/config/postgresql/postgresql.auto.conf
+        mv ${BASE_DIR}/data/postgresql/postgresql.auto.conf ${BASE_DIR}/config/postgresql/postgresql.auto.conf
+        ln -s ${BASE_DIR}/config/postgresql/postgresql.auto.conf ${BASE_DIR}/data/postgresql/postgresql.auto.conf
     fi
     if [ -f ${BASE_DIR}/data/postgresql/postgresql.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/postgresql.conf ]; then
-        ln -s ${BASE_DIR}/data/postgresql/postgresql.conf ${BASE_DIR}/config/postgresql/postgresql.conf
+        mv ${BASE_DIR}/data/postgresql/postgresql.conf ${BASE_DIR}/config/postgresql/postgresql.conf
+        ln -s ${BASE_DIR}/config/postgresql/postgresql.conf ${BASE_DIR}/data/postgresql/postgresql.conf
     fi
 
     su - postgres -c "/usr/bin/pg_ctl start -D $BASE_DIR/data/postgresql -l $BASE_DIR/logs/pgsql_server.log"
