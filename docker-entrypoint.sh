@@ -10,19 +10,19 @@ init_database_dir() {
         echo -e 'host all all 0.0.0.0/0 scram-sha-256' >> ${BASE_DIR}/data/postgresql/pg_hba.conf
         sed -i "s;#unix_socket_directories = '/run/postgresql';unix_socket_directories = '${BASE_DIR}/tmp';" ${BASE_DIR}/data/postgresql/postgresql.conf
         sed -i "s;#listen_addresses = 'localhost';listen_addresses = '*';" ${BASE_DIR}/data/postgresql/postgresql.conf
+    fi
 
-        if [ -f ${BASE_DIR}/data/postgresql/pg_hba.conf ]; then
-            ln -s ${BASE_DIR}/data/postgresql/pg_hba.conf ${BASE_DIR}/config/postgresql/pg_hba.conf
-        fi
-        if [ -f ${BASE_DIR}/data/postgresql/pg_ident.conf ]; then
-            ln -s ${BASE_DIR}/data/postgresql/pg_ident.conf ${BASE_DIR}/config/postgresql/pg_ident.conf
-        fi
-        if [ -f ${BASE_DIR}/data/postgresql/postgresql.auto.conf ]; then
-            ln -s ${BASE_DIR}/data/postgresql/postgresql.auto.conf ${BASE_DIR}/config/postgresql/postgresql.auto.conf
-        fi
-        if [ -f ${BASE_DIR}/data/postgresql/postgresql.conf ]; then
-            ln -s ${BASE_DIR}/data/postgresql/postgresql.conf ${BASE_DIR}/config/postgresql/postgresql.conf
-        fi
+    if [ -f ${BASE_DIR}/data/postgresql/pg_hba.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/pg_hba.conf ]; then
+        ln -s ${BASE_DIR}/data/postgresql/pg_hba.conf ${BASE_DIR}/config/postgresql/pg_hba.conf
+    fi
+    if [ -f ${BASE_DIR}/data/postgresql/pg_ident.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/pg_ident.conf ]; then
+        ln -s ${BASE_DIR}/data/postgresql/pg_ident.conf ${BASE_DIR}/config/postgresql/pg_ident.conf
+    fi
+    if [ -f ${BASE_DIR}/data/postgresql/postgresql.auto.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/postgresql.auto.conf ]; then
+        ln -s ${BASE_DIR}/data/postgresql/postgresql.auto.conf ${BASE_DIR}/config/postgresql/postgresql.auto.conf
+    fi
+    if [ -f ${BASE_DIR}/data/postgresql/postgresql.conf ] && [ ! -f ${BASE_DIR}/config/postgresql/postgresql.conf ]; then
+        ln -s ${BASE_DIR}/data/postgresql/postgresql.conf ${BASE_DIR}/config/postgresql/postgresql.conf
     fi
 
     su - postgres -c "/usr/bin/pg_ctl start -D $BASE_DIR/data/postgresql -l $BASE_DIR/logs/pgsql_server.log"
